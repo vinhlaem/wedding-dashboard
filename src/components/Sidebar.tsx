@@ -13,7 +13,7 @@ import {
   Quote,
 } from "lucide-react";
 
-const links = [
+export const links = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/banner", label: "Banner", icon: Image },
   { href: "/dashboard/gallery", label: "Gallery", icon: Images },
