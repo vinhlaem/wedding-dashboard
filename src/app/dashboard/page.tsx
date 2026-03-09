@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 
 const links = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/banner", label: "Banner", icon: Image },
   { href: "/dashboard/gallery", label: "Gallery", icon: Images },
   { href: "/dashboard/program", label: "Wedding Program", icon: CalendarDays },
@@ -21,6 +20,7 @@ const links = [
   { href: "/dashboard/timeline", label: "Timeline", icon: Clock },
   { href: "/dashboard/profile", label: "Profile", icon: Users },
   { href: "/dashboard/quote", label: "Quote", icon: Quote },
+  { href: "/dashboard/footer", label: "Footer", icon: Image },
 ];
 
 export default function DashboardPage() {

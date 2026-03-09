@@ -5,7 +5,8 @@ export type MediaComponent =
   | "video"
   | "timeline"
   | "profile"
-  | "quote";
+  | "quote"
+  | "footer";
 
 export type MediaSource = "upload" | "google-drive";
 export type MediaType = "image" | "video";
