@@ -20,6 +20,7 @@ const links = [
   { href: "/dashboard/timeline", label: "Timeline", icon: Clock },
   { href: "/dashboard/profile", label: "Profile", icon: Users },
   { href: "/dashboard/quote", label: "Quote", icon: Quote },
+  { href: "/dashboard/gift", label: "Gift", icon: LayoutDashboard },
   { href: "/dashboard/footer", label: "Footer", icon: Image },
 ];
 
