@@ -46,7 +46,11 @@ export default function GoogleDrivePicker({
           const accessToken: string = tokenResponse.access_token;
 
           const picker = new window.google.picker.PickerBuilder()
-            .addView(window.google.picker.ViewId.DOCS_IMAGES)
+            .addView(
+              new window.google.picker.DocsView()
+                .setIncludeFolders(true)
+                .setSelectFolderEnabled(true),
+            )
             .setOAuthToken(accessToken)
             .setDeveloperKey(process.env.NEXT_PUBLIC_GOOGLE_DRIVE_API_KEY!)
             .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED)
