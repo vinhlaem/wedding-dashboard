@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -28,31 +29,36 @@ export default function GiftManager() {
 
   const createMut = useMutation({
     mutationFn: (payload: Account) => api.post("/api/accounts", payload),
-    onSuccess: () => {
-      toast.success("Account created");
+    onSuccess: (res) => {
+      toast.success("Tạo tài khoản thành công");
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      setSelected(res.data?.data ?? null); // sync với server-returned doc (có _id)
     },
-    onError: () => toast.error("Create failed"),
+    onError: (err: any) =>
+      toast.error(err?.response?.data?.message || "Tạo thất bại"),
   });
 
   const updateMut = useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: Account }) =>
       api.put(`/api/accounts/${id}`, payload),
-    onSuccess: () => {
-      toast.success("Account updated");
+    onSuccess: (res) => {
+      toast.success("Cập nhật thành công");
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      setSelected(res.data?.data ?? null); // sync với server-returned doc
     },
-    onError: () => toast.error("Update failed"),
+    onError: (err: any) =>
+      toast.error(err?.response?.data?.message || "Cập nhật thất bại"),
   });
 
   const deleteMut = useMutation({
     mutationFn: (id: string) => api.delete(`/api/accounts/${id}`),
     onSuccess: () => {
-      toast.success("Account deleted");
+      toast.success("Xóa tài khoản thành công");
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       setSelected(null);
     },
-    onError: () => toast.error("Delete failed"),
+    onError: (err: any) =>
+      toast.error(err?.response?.data?.message || "Xóa thất bại"),
   });
 
   const createNew = () =>
@@ -94,8 +100,10 @@ export default function GiftManager() {
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Danh sách tài khoản</h3>
             <button
-              className="btn bg-rose-500 text-white px-3 py-1 rounded"
+              className="btn bg-rose-500 text-white px-3 py-1 rounded disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={createNew}
+              disabled={accounts.length >= 2}
+              title={accounts.length >= 2 ? "Tối đa 2 tài khoản" : ""}
             >
               Thêm
             </button>
@@ -161,8 +169,6 @@ export default function GiftManager() {
                   }
                 />
               </label>
-
-             
             </div>
 
             <div className="flex gap-3">
@@ -178,7 +184,9 @@ export default function GiftManager() {
                   !selected.accountNumber
                 }
               >
-                {createMut.isPending || updateMut.isPending ? "Saving..." : "Save"}
+                {createMut.isPending || updateMut.isPending
+                  ? "Saving..."
+                  : "Save"}
               </button>
               <button
                 className="btn bg-gray-200 px-4 py-2 rounded-lg"

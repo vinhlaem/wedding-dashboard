@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Image,
   LayoutDashboard,
@@ -12,7 +12,11 @@ import {
   Users,
   Quote,
   GiftIcon,
+  LogOut,
 } from "lucide-react";
+import { removeToken, getUser } from "@/lib/auth";
+import { useEffect, useState } from "react";
+import type { AuthUser } from "@/lib/auth";
 
 export const links = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -29,6 +33,17 @@ export const links = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    setUser(getUser());
+  }, []);
+
+  const handleLogout = () => {
+    removeToken();
+    router.replace("/login");
+  };
 
   return (
     <aside className="w-60 min-h-screen bg-white border-r border-gray-200 flex flex-col">
@@ -54,8 +69,34 @@ export default function Sidebar() {
           );
         })}
       </nav>
-      <div className="px-6 py-4 border-t border-gray-200 text-xs text-gray-400">
-        Wedding Dashboard v1.0
+      <div className="px-6 py-4 border-t border-gray-200 space-y-3">
+        {user && (
+          <div className="flex items-center gap-3">
+            {user.picture && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={user.picture}
+                alt={user.name}
+                className="w-8 h-8 rounded-full"
+                referrerPolicy="no-referrer"
+              />
+            )}
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-gray-700 truncate">
+                {user.name}
+              </p>
+              <p className="text-xs text-gray-400 truncate">{user.email}</p>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 w-full text-xs text-gray-500 hover:text-red-500 transition-colors"
+        >
+          <LogOut size={14} />
+          Sign out
+        </button>
+        <p className="text-xs text-gray-400">Wedding Dashboard v1.0</p>
       </div>
     </aside>
   );
