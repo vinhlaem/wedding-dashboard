@@ -134,7 +134,7 @@ export default function SlideManager() {
 
           <button
             onClick={() => fileRef.current?.click()}
-            className="px-3 py-2 border rounded text-sm"
+            className="px-3 py-2 border rounded text-sm text-gray-800 border-gray-700 transition-colors"
             type="button"
           >
             Upload & Select
