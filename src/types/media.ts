@@ -6,6 +6,7 @@ export type MediaComponent =
   | "timeline"
   | "profile"
   | "quote"
+  | "slide"
   | "footer";
 
 export type MediaSource = "upload" | "google-drive";

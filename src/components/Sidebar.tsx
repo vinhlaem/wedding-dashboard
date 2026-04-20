@@ -28,6 +28,7 @@ export const links = [
   { href: "/dashboard/profile", label: "Profile", icon: Users },
   { href: "/dashboard/quote", label: "Quote", icon: Quote },
   { href: "/dashboard/gift", label: "Gift", icon: GiftIcon },
+  { href: "/dashboard/slide", label: "Slide", icon: Image },
   { href: "/dashboard/footer", label: "Footer", icon: Image },
 ];
 
