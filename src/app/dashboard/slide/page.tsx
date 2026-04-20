@@ -1,7 +1,7 @@
-import MediaManager from "@/components/MediaManager";
+import SlideManager from "@/components/SlideManager";
 
 export const metadata = { title: "Slide | Wedding Dashboard" };
 
 export default function SlidePage() {
-  return <MediaManager component="slide" title="Slide Images" allowMultiple />;
+  return <SlideManager />;
 }
